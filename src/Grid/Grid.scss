@@ -1,0 +1,12 @@
+.Grid {
+  margin-left: 300px;
+}
+
+
+  .gridElement {
+
+    &.focus {
+      background-color: darkslateblue;
+    }
+  }
+

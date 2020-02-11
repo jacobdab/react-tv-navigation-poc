@@ -1,0 +1,30 @@
+.Menu {
+  background-color: #282c34;
+  position: fixed;
+  left: 0;
+  height: 100%;
+  width: 300px;
+  color: #61dafb;
+}
+
+.nav {
+  list-style: none;
+  margin-top: 100px;
+  padding: 0;
+
+  .nav-item {
+    padding: 15px 0;
+    font-size: 30px;
+    text-decoration: none;
+    color: #61dafb;
+    display: list-item;
+
+    &.focus {
+      background-color: aliceblue;
+    }
+  }
+
+  & .active {
+    color: aquamarine;
+  }
+}
