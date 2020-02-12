@@ -57,7 +57,6 @@ const storeContentElements = (state: any, action: any) => {
 
 const storeCurrentFocus = (state: any, action: any) => {
     const elemID = helperList.splitID(action.currentFocus.id);
-        console.log(action.currentFocus.id);
     return updateObject(state, {
         focus:
             {

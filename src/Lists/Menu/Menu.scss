@@ -7,10 +7,15 @@
   color: #61dafb;
 }
 
+.wrapper {
+  margin-top: 100px;
+  overflow: hidden;
+}
+
 .nav {
   list-style: none;
-  margin-top: 100px;
   padding: 0;
+  position: relative;
 
   .nav-item {
     padding: 15px 0;
@@ -20,7 +25,11 @@
     display: list-item;
 
     &.focus {
-      background-color: aliceblue;
+      background-color: aliceblue !important;
+    }
+
+    &.focusHold {
+      background-color: rgba(240,248,255,0.2);
     }
   }
 

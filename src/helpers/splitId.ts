@@ -16,6 +16,5 @@ export const splitID = (id: string) => {
     splitted.number = Number(id.match(/\d+/g))
     // splitted.row = Number(id.match(/(?<=r)\d+/g));
     // splitted.column = Number(id.match(/(?<=c)\d+/g));
-    console.log(splitted);
     return splitted;
 };

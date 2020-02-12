@@ -19,14 +19,31 @@ const Grid = (props: any) => {
         gridElements && props.storeGridElements(gridElements);
     }, []);
 
+    useEffect(() => {
+        const currentFocus: HTMLElement | null = document.querySelector(`#${props.currentFocus.full}`);
+
+        if(currentFocus) {
+            let scroller: HTMLElement | null = document.querySelector(`.Grid`);
+            const calculateTransition = currentFocus.clientHeight && props.currentFocus.number > 8
+                ? (Math.floor((props.currentFocus.number / 4))) * (currentFocus.clientHeight + 20)
+                : 0
+            if(scroller && props.currentFocus.string === 'grid'){
+                scroller.style.top = -calculateTransition + 'px';
+            }
+        }
+    }, [props.currentFocus]);
+
     return (<div className={props.className} ref={ref => gridElements = ref}>
         {grid}
     </div>)
 };
 
+const mapStateToProps = (state: any) => ({
+    currentFocus: state.focus.current.id
+});
 
 const mapDispatchToProps = (dispatch: any) => ({
     storeGridElements: (menuElements: HTMLElement) => dispatch(storeContentElements(menuElements))
 });
 
-export default connect(null, mapDispatchToProps)(Grid);
+export default connect(mapStateToProps, mapDispatchToProps)(Grid);

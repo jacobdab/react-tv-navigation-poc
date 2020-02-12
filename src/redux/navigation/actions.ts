@@ -115,9 +115,12 @@ const findElement = (state: any, index: number, direction?: any) => {
         }
         oldFocus = document.querySelector(`#${state.focus.current.id.full}`);
         oldFocus?.classList.remove('focus');
+        oldFocus?.classList.remove('focusHold');
         focus = document.querySelector(`#${element}`);
         focus?.classList.add('focus');
-        // console.log(focus?.offsetTop);
+    if(oldFocus?.id.includes('menu') && focus?.id.includes('grid')){
+        oldFocus?.classList.add('focusHold');
+    }
         return state.focus.current.id.full !== focus?.id && focus
 };
 
