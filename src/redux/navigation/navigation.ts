@@ -1,6 +1,6 @@
 import {ACTIONS} from "./actionTypes";
-import {updateObject} from "../../helper/updateObject";
-import * as helperList from '../../helper/helpersList'
+import {updateObject} from "../../helpers/updateObject";
+import * as helperList from '../../helpers/helpersList'
 
 const initDefaultFocus = (state: any) => {
     const defaultFocus: HTMLElement | null = document.querySelector(`#${state.menu[0].id.full}`);
@@ -16,7 +16,7 @@ const initDefaultFocus = (state: any) => {
                         id: {
                             full: state.menu[0].id.full,
                             string: state.menu[0].id.string,
-                            row: state.menu[0].id.row
+                            number: state.menu[0].id.number
                         }
                     }
             }
@@ -33,7 +33,7 @@ const storeMenuElements = (state: any, action: any) => {
         return {
             component: 'Menu',
             list: 'vertical',
-            id: {full: element.id, string: elemID.id, number: elemID.row},
+            id: {full: element.id, string: elemID.id, number: elemID.number},
             className: element.className,
         }
     });
@@ -47,7 +47,7 @@ const storeContentElements = (state: any, action: any) => {
         return {
             component: 'grid',
             list: 'grid',
-            id: {full: element.id, string: elemID.id, row: elemID.row, column: elemID.column},
+            id: {full: element.id, string: elemID.id, number: elemID.number},
             className: element.className,
         }
     });
@@ -57,7 +57,7 @@ const storeContentElements = (state: any, action: any) => {
 
 const storeCurrentFocus = (state: any, action: any) => {
     const elemID = helperList.splitID(action.currentFocus.id);
-
+        console.log(action.currentFocus.id);
     return updateObject(state, {
         focus:
             {
@@ -68,8 +68,7 @@ const storeCurrentFocus = (state: any, action: any) => {
                         id: {
                             full: action.currentFocus.id,
                             string: elemID.id,
-                            row: elemID.row,
-                            column: elemID.column
+                            number: elemID.number,
                         }
                     },
                 Grid: state.focus?.Grid,

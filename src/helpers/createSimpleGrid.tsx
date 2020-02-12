@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import GridElement from "../gridElement/gridItem";
+import GridElement from "../Lists/Grid/gridElement/gridItem";
 import {ReactElement} from "react";
 
 

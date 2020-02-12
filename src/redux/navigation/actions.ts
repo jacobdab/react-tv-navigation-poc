@@ -60,19 +60,19 @@ export const changeFocus = (state: any , keyPress: string) => {
 
 const changeClass = (state: any, direction: string) => {
         if (direction === 'ArrowDown') {
-            let index = state.focus.current.id.row < state.menu.length ? state.focus.current.id.row : state.menu.length - 1;
+            let index = state.focus.current.id.number < state.menu.length ? state.focus.current.id.number : state.menu.length - 1;
             return findElement(state, index, 'down');
         }
         if (direction === 'ArrowUp') {
-            let index = Number(state.focus.current.id.row) - 2 >= 0 ? Number(state.focus.current.id.row) - 2 : 0;
+            let index = Number(state.focus.current.id.number) - 2 >= 0 ? Number(state.focus.current.id.number) - 2 : 0;
             return findElement(state, index, 'up');
         }
         if (direction === 'ArrowLeft') {
-            let index = Number(state.focus.current.id.row) - 2 >= 0 ? Number(state.focus.current.id.row) - 2 : 0;
+            let index = Number(state.focus.current.id.number) - 2 >= 0 ? Number(state.focus.current.id.number) - 2 : 0;
             return findElement(state, index, 'left');
         }
         if (direction === 'ArrowRight') {
-            let index = Number(state.focus.current.id.row) - 2 >= 0 ? Number(state.focus.current.id.row) - 2 : 0;
+            let index = Number(state.focus.current.id.number) - 2 >= 0 ? Number(state.focus.current.id.number) - 2 : 0;
             return findElement(state, index, 'right');
         }
 };
@@ -80,8 +80,10 @@ const changeClass = (state: any, direction: string) => {
 const findElement = (state: any, index: number, direction?: any) => {
         let oldFocus: HTMLElement | null;
         let focus: HTMLElement | null;
-        let element = `${state.menu[0].id.string}${state.menu[index].id.number}`;
-
+        let element;
+        if(state.menu[index]) {
+            element = `${state.menu[0].id.string}${state.menu[index].id.number}`;
+        }
         if(state.focus.current.component === 'Menu' && direction === 'right') {
             element =  state.grid[0].id.full;
             if(state.focus.Grid){
@@ -90,37 +92,32 @@ const findElement = (state: any, index: number, direction?: any) => {
         }
 
         if(state.focus.current.component !== 'Menu' && direction) {
-            console.log(direction);
             switch(direction){
                 case 'up':
-                    if (state.focus.current.id.row === 0) {return false};
-                   element = state.focus.current.id.string + String(state.focus.current.id.row - 1) + String(state.focus.current.id.column);
+                    if (state.focus.current.id.number - 4 < 0) {return false};
+                   element = state.grid[state.focus.current.id.number - 4].id.full
                     break;
                 case 'down':
-                    if (state.focus.current.id.row === state.grid[state.grid.length -1].id.row) {return false};
-                    element = state.focus.current.id.string + String(state.focus.current.id.row + 1) + String(state.focus.current.id.column);
+                    if (state.grid[state.grid.length - 1].id.number < state.focus.current.id.number + 4)  {return false};
+                    element = state.grid[state.focus.current.id.number + 4].id.full
                     break;
                 case 'left':
-                    if(state.focus.current.id.column === 0) {
-                        console.log('1312');
+                    if(state.focus.current.id.number === 0) {
                         element = state.focus.Menu.id.full
                     break}
-                    element = state.focus.current.id.string + String(state.focus.current.id.row) + String(state.focus.current.id.column - 1);
+                    element = state.grid[state.focus.current.id.number - 1].id.full
                     break;
                 case 'right':
-                    if (state.focus.current.id.column === 3) {return false};
-                    element = state.focus.current.id.string + String(state.focus.current.id.row) + String(state.focus.current.id.column + 1);
+                    if(state.focus.current.id.number === (state.grid.length -1)) {return false}
+                    element = state.grid[state.focus.current.id.number + 1].id.full
                     break;
             }
-            // element = `${state.menu[0].id.full}`;
         }
-        console.log(element);
         oldFocus = document.querySelector(`#${state.focus.current.id.full}`);
         oldFocus?.classList.remove('focus');
         focus = document.querySelector(`#${element}`);
         focus?.classList.add('focus');
-        console.log(oldFocus);
-        console.log(focus);
+        // console.log(focus?.offsetTop);
         return state.focus.current.id.full !== focus?.id && focus
 };
 

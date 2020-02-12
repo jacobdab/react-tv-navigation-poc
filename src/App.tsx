@@ -3,9 +3,9 @@ import {Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {Dispatch} from "redux";
 
-import Menu from './Menu/Menu';
-import Content1 from '../src/Content1/Content1';
-import Content2 from '../src/Content2/Content2';
+import Menu from './Lists/Menu/Menu';
+import Content1 from './Components/Content1/Content1';
+import Content2 from './Components/Content2/Content2';
 import {initDefaultFocus} from "./redux/navigation/actions";
 
 import './App.css';
