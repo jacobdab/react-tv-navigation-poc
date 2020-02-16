@@ -6,6 +6,8 @@ import * as actions from '../redux/navigation/actions'
 import {useEffect} from "react";
 
 const Navigation = (props: any) => {
+    let scrollValue = 0;
+    let scrollMenuValue = 0;
 
     const handleKeyPress = (evt: KeyboardEvent) => {
         evt.preventDefault();
@@ -22,11 +24,45 @@ const Navigation = (props: any) => {
         }
     }
 
+    const handleScroll = (evt: WheelEvent) => {
+        evt.stopPropagation();
+        console.log(evt);
+        const scroll = evt.deltaY < 0 ? 'up' : 'down';
+        // @ts-ignore
+        const isMenu = evt.path.find((element) => element.className === 'Menu');
+        if(scroll && isMenu){
+            let scroller: HTMLElement | null = document.querySelector(`.nav`);
+            if(scroller && scroll === 'down' && scrollMenuValue >= -scroller.scrollHeight + scroller?.clientHeight){
+                scrollMenuValue += -83.07;
+                scroller.style.top = scrollMenuValue + 'px';
+            } else if (scroller && scroll === 'up' && scrollMenuValue < 0){
+                scrollMenuValue += 83.07;
+                scroller.style.top = scrollMenuValue + 'px';
+            }
+        } else if(scroll && !isMenu) {
+            let scroller: HTMLElement | null = document.querySelector(`.Grid`);
+            console.log(scroller);
+            // @ts-ignore
+            console.log(evt.path);
+
+            if(scroller && scroll === 'down' && scrollValue >= -scroller.scrollHeight + scroller?.clientHeight  ){
+                scrollValue += -220;
+                scroller.style.top = scrollValue + 'px';
+            } else if (scroller && scroll === 'up' && scrollValue < 0) {
+                scrollValue += 220;
+                // @ts-ignore
+                scroller.style.top = scrollValue + 'px';
+            }
+        }
+        console.log(scrollValue);
+    }
+
     useEffect(() => {
             window.addEventListener('keydown' , handleKeyPress);
-
+            window.addEventListener('wheel', handleScroll);
             return () => {
             window.removeEventListener('keydown', handleKeyPress);
+            window.removeEventListener('wheel', handleScroll);
             }
     },[handleKeyPress])
 

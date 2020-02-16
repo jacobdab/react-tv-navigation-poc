@@ -11,6 +11,7 @@ import {storeMenuElements} from '../../redux/navigation/actions'
 
 const Menu = (props: any) => {
     let ulList: any;
+
     useEffect(() => {
         if(ulList) {
             props.storeMenuElements(ulList);
@@ -23,11 +24,14 @@ const Menu = (props: any) => {
         if(currentFocus){
             let scroller: HTMLElement | null = document.querySelector(`.nav`);
 
-            const calculateTransition = currentFocus.clientHeight && props.currentFocus.number > 10
-                ? (props.currentFocus.number - 10) * currentFocus.clientHeight
-                : 0
-            if(scroller && props.currentFocus.string === 'menu'){
-                scroller.style.top = -calculateTransition + 'px';
+            if(scroller){
+                let currentOffset = (props.currentFocus.number - 1) * currentFocus.clientHeight
+                const calculateTransition = currentFocus.clientHeight && currentOffset >= -scroller.scrollHeight + scroller?.clientHeight
+                    ? currentOffset
+                    : 0
+                if(scroller && props.currentFocus.string === 'menu'){
+                    scroller.style.top = -calculateTransition + 'px';
+                }
             }
         }
     }, [props.currentFocus]);
