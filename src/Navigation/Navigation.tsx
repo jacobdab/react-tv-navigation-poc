@@ -44,8 +44,9 @@ const Navigation = (props: any) => {
             console.log(scroller);
             // @ts-ignore
             console.log(evt.path);
-
+            console.log(scroller?.clientHeight);
             if(scroller && scroll === 'down' && scrollValue >= -scroller.scrollHeight + scroller?.clientHeight  ){
+                console.log(-scroller.scrollHeight + scroller?.clientHeight);
                 scrollValue += -220;
                 scroller.style.top = scrollValue + 'px';
             } else if (scroller && scroll === 'up' && scrollValue < 0) {
