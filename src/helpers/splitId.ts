@@ -9,6 +9,7 @@ export const splitID = (id: string) => {
         if (isNaN(char)) {
             string += char;
         }
+        return;
     });
 // ^r\d+
 //     c\d+

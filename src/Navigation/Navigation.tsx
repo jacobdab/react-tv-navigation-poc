@@ -1,4 +1,3 @@
-import * as React from "react";
 import {connect} from 'react-redux';
 
 
@@ -65,7 +64,7 @@ const Navigation = (props: any) => {
             window.removeEventListener('keydown', handleKeyPress);
             window.removeEventListener('wheel', handleScroll);
             }
-    },[handleKeyPress])
+    },[handleKeyPress,handleScroll])
 
     return (props.children)
 };

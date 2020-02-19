@@ -19,17 +19,26 @@ const Menu = (props: any) => {
     }, []);
 
     useEffect(() => {
-            const currentFocus: HTMLElement | null = document.querySelector(`#${props.currentFocus.full}`);
+        if (!props.menu) {
+            return;
+        }
 
-        if(currentFocus){
+        let { menu, currentFocus } = props;
+
+        const currentFocusElem = document.querySelector(`#${currentFocus.full}`);
+        const lastItem: HTMLElement | null = document.querySelector(`#${menu[menu.length - 1].id.full}`)
+        if (currentFocusElem && lastItem) {
             let scroller: HTMLElement | null = document.querySelector(`.nav`);
 
-            if(scroller){
-                let currentOffset = (props.currentFocus.number - 1) * currentFocus.clientHeight
-                const calculateTransition = currentFocus.clientHeight && currentOffset >= -scroller.scrollHeight + scroller?.clientHeight
+            if (scroller) {
+                let currentOffset = (currentFocus.number - 1) * currentFocusElem.clientHeight
+                const calculateTransition = currentFocusElem.clientHeight && currentOffset >= -scroller.scrollHeight + scroller?.clientHeight
                     ? currentOffset
                     : 0
-                if(scroller && props.currentFocus.string === 'menu'){
+
+                const lastItemPositionInViewPort = lastItem.getBoundingClientRect().bottom;
+                if (scroller && currentFocus.string === 'menu' && lastItemPositionInViewPort > window.innerHeight ||
+                    currentFocus.number <= 2 && currentFocus.string === 'menu') {
                     scroller.style.top = -calculateTransition + 'px';
                 }
             }
@@ -61,7 +70,8 @@ const Menu = (props: any) => {
 }
 
 const mapStateToProps = (state: any) => ({
-    currentFocus: state.focus.current.id
+    currentFocus: state.focus.current.id,
+    menu: state.menu
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
