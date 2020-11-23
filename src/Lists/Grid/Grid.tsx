@@ -1,5 +1,5 @@
 import * as React from "react";
-import {storeContentElements, storeLastFocusOfComponent} from "../../redux/navigation/actions";
+import {storeContentElements, storeLastFocusOfComponent, storeCurrentContentOffset} from "../../redux/navigation/actions";
 import {connect} from "react-redux";
 
 import './Grid.scss'
@@ -15,9 +15,8 @@ const Grid = (props: any) => {
     const onClickHandler = (evt: React.MouseEvent<HTMLDivElement>) => {
         evt.preventDefault();
         evt.stopPropagation();
-        console.log('123');
         console.log(evt.currentTarget);
-        props.storeLastFocusOfComponent(evt.currentTarget)
+        // props.storeLastFocusOfComponent(evt.currentTarget)
     };
 
 
@@ -43,6 +42,7 @@ const Grid = (props: any) => {
                     : getTransition
                 scroller.style.top = -getTransition + 'px';
                 setTransition(getTransition);
+                props.storeCurrentContentOffset(-getTransition);
                 setLastFocusId(props.currentFocus.number)
             }
         }
@@ -59,7 +59,8 @@ const mapStateToProps = (state: any) => ({
 
 const mapDispatchToProps = (dispatch: any) => ({
     storeGridElements: (menuElements: HTMLElement) => dispatch(storeContentElements(menuElements)),
-    storeLastFocusOfComponent: (currentTarget: EventTarget | null) => dispatch(storeLastFocusOfComponent(currentTarget))
+    storeLastFocusOfComponent: (currentTarget: EventTarget | null) => dispatch(storeLastFocusOfComponent(currentTarget)),
+    storeCurrentContentOffset: (currentOffset: number) => dispatch(storeCurrentContentOffset(currentOffset))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Grid);

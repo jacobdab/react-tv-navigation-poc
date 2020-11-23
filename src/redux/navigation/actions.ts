@@ -6,12 +6,6 @@ export const initDefaultFocus = () => {
     }
 };
 
-export const navigateByKeyPress = (key: string) => {
-    return {
-        type: ACTIONS.NAVIGATE_BY_KEYPRESS,
-        keyPress: key
-    }
-};
 
 export const storeMenuElements = (elements: HTMLElement) => {
     return {
@@ -144,3 +138,10 @@ export const storeLastFocusOfComponent = (lastFocusOfComponent: any) => {
         lastFocusOfComponent: lastFocusOfComponent
     }
 };
+
+export const storeCurrentContentOffset = (lastOffsetInContainer: number) => {
+    return {
+        type: ACTIONS.STORE_CURRENT_CONTENT_OFFSET,
+        lastFocusOfComponent: lastOffsetInContainer
+    }
+}

@@ -96,6 +96,10 @@ const storeLastFocusOfComponent = (state: any, action: any) => {
     return updateObject(state, updatedFocus)
 };
 
+const storeCurrentContentOffset = (state: any, action: any) => {
+    return updateObject(state, {currentContentOffset: action.lastFocusOfComponent})
+}
+
 
 const navigation = (state: any, action: any) => {
     switch (action.type) {
@@ -111,6 +115,8 @@ const navigation = (state: any, action: any) => {
             return storeCurrentFocus(state, action);
         case ACTIONS.STORE_LAST_FOCUS_OF_COMPONENT:
             return storeLastFocusOfComponent(state, action);
+        case ACTIONS.STORE_CURRENT_CONTENT_OFFSET:
+            return storeCurrentContentOffset(state, action);
     }
     return state;
 };
